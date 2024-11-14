@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{book.title}}{% endblock %}
+
+{% block content %}
+
+
+<h2>Delete Review</h2>
+
+<form method="post">
+<p> O'chirishga aminmisiz?</p>
+    {% csrf_token %}
+
+    <button type="submit">HA, O'chirilsin</button>
+</form>
+<a href="{% url 'books:detail' book_id=review.book.id %}"> Bekor qilish </a>
+{% endblock content %}

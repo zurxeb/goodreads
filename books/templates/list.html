@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Books{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="row">
+        <div class="container">
+        <h1>Books</h1>
+        {% for book in page_obj %}
+            <div class="row mb-3">
+                <div class="col-2">
+                    <img style="width: 200px; height: 320;" src="{{ book.cover_picture.url }}">
+                </div>
+                <div class="col-6">
+                    <a href="{% url 'books:detail' book.id %}">{{ book.title }}</a>
+                    <p>{{ book.description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap pagination -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="page-item active">
+              <a class="page-link">{{ num }}</a>
+            </li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+ </div>
+{% else %}
+<div class="text-center" >
+<h1> Log in bolganingizdan keyin kitoblarni korshingiz mumkun </h1>
+<a class="btn btn-primary" href="{%url 'users:login'%}" >Login </a>
+</div>
+{% endif %}
+{% endblock %}

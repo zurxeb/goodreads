@@ -1,0 +1,21 @@
+<!-- books/templates/books/add_book.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3">
+            <h2>Add books</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit" class="btn btn-primary" >Kitob Qoshish</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
